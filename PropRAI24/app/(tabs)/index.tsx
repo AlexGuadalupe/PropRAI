@@ -8,6 +8,7 @@ import { ThemedView } from '@/components/ThemedView'; // Importa un componente p
 import ButtonRegister from '@/components/ButtonRegister'; // Importa el componente personalizado para el botón de registro
 import Card from '@/components/Card'; // Importa el componente personalizado para mostrar una tarjeta de contenido
 import Register_Form from '@/components/Register_Form'; // Importa el formulario de registro
+import PropertyCard from '@/components/PropertyCard';
 
 // Crear un stack navigator usando react-navigation
 const Stack = createStackNavigator();
@@ -48,6 +49,13 @@ function HomeScreen({ navigation }) {
           <Text style={{ color: 'white', fontWeight: 'bold' }}>Register Now !!</Text>
         </TouchableOpacity>
       </ThemedView>
+      <PropertyCard 
+        image={require('@/assets/images/1.png')} // Ruta de la imagen
+        title="Casa en la Playa"
+        pueblo="Rincón"
+        precio={250000}
+        admin="Juan Pérez"
+      />
     </ParallaxScrollView>
   );
 }
