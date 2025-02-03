@@ -1,74 +1,72 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+// Importación de módulos necesarios
+import React from 'react'; // Importa React para usar JSX y componentes
+import { Image, View, Text, TouchableOpacity } from 'react-native'; // Importa componentes de React Native
+import { createStackNavigator } from '@react-navigation/stack'; // Importa la funcionalidad para crear navegación en pila (stack)
+import ParallaxScrollView from '@/components/ParallaxScrollView'; // Importa un componente personalizado de ScrollView con efecto parallax
+import { ThemedText } from '@/components/ThemedText'; // Importa un componente personalizado para texto temático
+import { ThemedView } from '@/components/ThemedView'; // Importa un componente personalizado para vistas temáticas
+import ButtonRegister from '@/components/ButtonRegister'; // Importa el componente personalizado para el botón de registro
+import Card from '@/components/Card'; // Importa el componente personalizado para mostrar una tarjeta de contenido
+import Register_Form from '@/components/Register_Form'; // Importa el formulario de registro
+import PropertyCard from '@/components/PropertyCard';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+// Crear un stack navigator usando react-navigation
+const Stack = createStackNavigator();
 
-export default function HomeScreen() {
+// Componente HomeScreen que representa la pantalla principal de la aplicación
+function HomeScreen({ navigation }) {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
+    <ParallaxScrollView 
+      headerBackgroundColor={{ light: '#fff', dark: '#fff' }} 
+      headerImage={ 
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          source={require('@/assets/images/logo-nobackground.png')} 
+          style={{
+            width: 200, 
+            height: 200, 
+            resizeMode: 'contain', 
+            justifyContent: 'center', 
+            alignItems: 'center'
+          }} 
         />
       }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
+      <ThemedView style={{ padding: 16 }}> {/* Vista temática */}
+        <ThemedText style={{ marginBottom: 20 }} type="subtitle">WELCOME TO PROPRAI</ThemedText>
+        <ThemedText style={{ marginBottom: 20 }}>
+          Una plataforma simple para agentes y clientes de alquiler de propiedades.
+          Registrate y comienza a disfrutar de los beneficios.
         </ThemedText>
+        <TouchableOpacity 
+          style={{
+            backgroundColor: '#007BFF', 
+            padding: 12, 
+            borderRadius: 8, 
+            marginTop: 20, // Margen superior agregado
+            alignItems: 'center'
+          }} 
+          onPress={() => navigation.navigate('Register_Form')}
+        >
+          <Text style={{ color: 'white', fontWeight: 'bold' }}>Register Now !!</Text>
+        </TouchableOpacity>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
+      <PropertyCard 
+        image={require('@/assets/images/1.png')} // Ruta de la imagen
+        title="Casa en la Playa"
+        pueblo="Rincón"
+        precio={250000}
+        admin="Juan Pérez"
+      />
     </ParallaxScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+// Componente principal de la navegación entre pantallas
+export default function AppNavigator() {
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      {/* Define las pantallas del Stack Navigator */}
+      <Stack.Screen name="Home" component={HomeScreen} /> 
+      <Stack.Screen name="Register_Form" component={Register_Form} /> 
+    </Stack.Navigator>
+  );
+}
