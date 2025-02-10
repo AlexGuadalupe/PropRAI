@@ -1,19 +1,12 @@
-const express = require("express");
-const router = express.Router();
-const { getAllUsers, createUser } = require("../models/user"); // Importing the functions from the model
+const express = require('express');
+const bodyParser = require('body-parser');
+const { createUser } = require("./User");  // User.js handles the DB
+const app = express();
 
-// Get all users
-router.get("/", async (req, res) => {
-    try {
-        const users = await getAllUsers();  // Get users from the database
-        res.json(users);
-    } catch (error) {
-        res.status(500).json({ error: "Error fetching users" });
-    }
-});
+app.use(bodyParser.json());
 
-// Create new user
-router.post("/", async (req, res) => {
+// POST route to create a user
+app.post("/User", async (req, res) => {
     const { nombre, apellidos, email, password, direccion, telefono, fecha_de_nacimiento, cliente, agente } = req.body;
 
     // Basic validation
@@ -22,7 +15,7 @@ router.post("/", async (req, res) => {
     }
 
     try {
-        // Call the createUser function from the model to insert into the DB
+        // Call the createUser function from User.js to insert into the DB
         const newUser = await createUser({
             nombre,
             apellidos,
@@ -37,8 +30,12 @@ router.post("/", async (req, res) => {
 
         res.status(201).json(newUser);  // Return the newly created user
     } catch (error) {
+        console.error("❌ Error in POST /User:", error);
         res.status(500).json({ error: "Error creating user" });
     }
 });
 
-module.exports = router;
+// Start the server
+app.listen(3000, () => {
+    console.log("🚀 Server running on port 3000");
+});
