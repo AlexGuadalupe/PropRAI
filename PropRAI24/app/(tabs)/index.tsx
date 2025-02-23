@@ -17,10 +17,9 @@ const Stack = createStackNavigator();
 function HomeScreen({ navigation }) {
   return (
     <ParallaxScrollView 
-      headerBackgroundColor={{ light: '#fff', dark: '#fff' }} 
       headerImage={ 
         <Image
-          source={require('@/assets/images/logo-nobackground.png')} 
+          source={require('@/assets/images/logo-proprai.png')} 
           style={{
             width: 200, 
             height: 200, 
