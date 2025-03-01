@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView, StyleSheet } from 'react-native';
 import axios from 'axios';
-
+const API_URL = 'http://192.168.1.118:3000/User'; // Replace X.X with your actual IP
 const Register_Form = () => {
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -45,7 +45,7 @@ const Register_Form = () => {
 
         try {
             console.log('Sending POST request to register user...');
-            const response = await axios.post('http://192.168.0.6:3000/User', userData);
+            const response = await axios.post(API_URL, userData);
             console.log('Registration successful:', response.data);
 
             Alert.alert(

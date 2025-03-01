@@ -1,18 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { getAllUsers, createUser } = require("../models/user"); // Importing the functions from the model
+// Importing the functions from the model
 
-// Get all users
-router.get("/", async (req, res) => {
-    try {
-        const users = await getAllUsers();  // Get users from the database
-        res.json(users);
-    } catch (error) {
-        res.status(500).json({ error: "Error fetching users" });
-    }
-});
-
-// Create new user
+// POST route to create a user
 router.post("/", async (req, res) => {
     const { nombre, apellidos, email, password, direccion, telefono, fecha_de_nacimiento, cliente, agente } = req.body;
 
@@ -37,7 +27,19 @@ router.post("/", async (req, res) => {
 
         res.status(201).json(newUser);  // Return the newly created user
     } catch (error) {
+        console.error("❌ Error creating user:", error);
         res.status(500).json({ error: "Error creating user" });
+    }
+});
+
+// GET route to fetch all users
+router.get("/", async (req, res) => {
+    try {
+        const users = await getAllUsers(); // Assuming getAllUsers fetches all users from the DB
+        res.status(200).json(users); // Return the list of users
+    } catch (error) {
+        console.error("❌ Error fetching users:", error);
+        res.status(500).json({ error: "Error fetching users" });
     }
 });
 
