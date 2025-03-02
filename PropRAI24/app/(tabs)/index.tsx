@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
@@ -7,10 +8,22 @@ import { ThemedView } from '@/components/ThemedView';
 import ButtonRegister from '@/components/ButtonRegister';
 import Register_Form from '@/components/Register_Form';
 import PropertyCard from '@/components/PropertyCard';
+import PropertyDetailsScreen from '@/components/PropertyDetailsScreen';
 import Footer from '@/components/Footer';
 import Signin from '@/components/Signin';
 
 const Stack = createStackNavigator();
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="PropertyDetails" component={PropertyDetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
 function HomeScreen({ navigation }) {
   return (
@@ -50,7 +63,6 @@ function HomeScreen({ navigation }) {
         headerImage={
           <Image
             source={require('@/assets/images/LOGO_PropRAI.png')}
-            style={styles.logo}
           />
         }
       >
