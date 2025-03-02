@@ -1,21 +1,20 @@
-// Importación de módulos necesarios
-import React from 'react'; // Importa React para usar JSX y componentes
-import { Image, View, Text, TouchableOpacity } from 'react-native'; // Importa componentes de React Native
-import { createStackNavigator } from '@react-navigation/stack'; // Importa la funcionalidad para crear navegación en pila (stack)
-import ParallaxScrollView from '@/components/ParallaxScrollView'; // Importa un componente personalizado de ScrollView con efecto parallax
-import { ThemedText } from '@/components/ThemedText'; // Importa un componente personalizado para texto temático
-import { ThemedView } from '@/components/ThemedView'; // Importa un componente personalizado para vistas temáticas
-import ButtonRegister from '@/components/ButtonRegister'; // Importa el componente personalizado para el botón de registro
-import Card from '@/components/Card'; // Importa el componente personalizado para mostrar una tarjeta de contenido
-import Register_Form from '@/components/Register_Form'; // Importa el formulario de registro
+import React from 'react';
+import { Image, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import ButtonRegister from '@/components/ButtonRegister';
+import Register_Form from '@/components/Register_Form';
 import PropertyCard from '@/components/PropertyCard';
+import Footer from '@/components/Footer';
+import Signin from '@/components/Signin';
 
-// Crear un stack navigator usando react-navigation
 const Stack = createStackNavigator();
 
-// Componente HomeScreen que representa la pantalla principal de la aplicación
 function HomeScreen({ navigation }) {
   return (
+<<<<<<< HEAD
     <ParallaxScrollView 
       headerImage={ 
         <Image
@@ -43,29 +42,130 @@ function HomeScreen({ navigation }) {
             marginTop: 20, // Margen superior agregado
             alignItems: 'center'
           }} 
+=======
+    <View style={styles.container}>
+      {/* Componente de ScrollView con efecto parallax */}
+      <ParallaxScrollView
+        headerBackgroundColor={{ dark: 'white', light: 'white' }}
+        headerImage={
+          <Image
+            source={require('@/assets/images/LOGO_PropRAI.png')}
+            style={styles.logo}
+          />
+        }
+      >
+        {/* Contenido de la pantalla */}
+    <ThemedView style={styles.contentContainer} lightColor="white">
+        <ThemedText style={styles.subtitle} type="subtitle">
+            WELCOME TO PropPRAI
+          </ThemedText>
+          <ThemedText style={styles.description}>
+            Una plataforma simple para agentes y clientes de alquiler de propiedades.
+            Regístrate y comienza a disfrutar de los beneficios.
+          </ThemedText>
+
+        {/* Botón de registro */}
+        <TouchableOpacity
+          style={styles.registerButton}
+>>>>>>> 5a77913 (logré el fondo blanco en totalidad)
           onPress={() => navigation.navigate('Register_Form')}
         >
-          <Text style={{ color: 'white', fontWeight: 'bold' }}>Register Now !!</Text>
+          <Text style={styles.registerText}>Register Now !!</Text>
         </TouchableOpacity>
+
+        {/* Botón de Sign In */}
+        <TouchableOpacity
+          style={styles.signinButton}
+          onPress={() => navigation.navigate('Signin')}
+        >
+          <Text style={styles.signinText}>Sign In</Text>
+        </TouchableOpacity>
+
+        {/* Tarjetas de propiedades */}
+        <PropertyCard
+          image={require('@/assets/images/1.png')}
+          title="Casa en la Montaña"
+          pueblo="Adjuntas"
+          precio={20000}
+          admin="Pedro Pérez"
+        />
+        <PropertyCard
+          image={require('@/assets/images/2.png')}
+          title="Casa en la Playa"
+          pueblo="Rincón"
+          precio={25000}
+          admin="Juan Pérez"
+        />
+        <PropertyCard
+          image={require('@/assets/images/3.png')}
+          title="Apartamento en la Ciudad"
+          pueblo="San Juan"
+          precio={15000}
+          admin="María Rodríguez"
+        />
       </ThemedView>
-      <PropertyCard 
-        image={require('@/assets/images/1.png')} // Ruta de la imagen
-        title="Casa en la Playa"
-        pueblo="Rincón"
-        precio={250000}
-        admin="Juan Pérez"
-      />
-    </ParallaxScrollView>
+      </ParallaxScrollView>
+      {/* Footer */}
+      <Footer />
+    </View>
   );
 }
 
-// Componente principal de la navegación entre pantallas
 export default function AppNavigator() {
   return (
     <Stack.Navigator initialRouteName="Home">
-      {/* Define las pantallas del Stack Navigator */}
-      <Stack.Screen name="Home" component={HomeScreen} /> 
-      <Stack.Screen name="Register_Form" component={Register_Form} /> 
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Register_Form" component={Register_Form} />
+      <Stack.Screen name="Signin" component={Signin} />
     </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  contentContainer: {
+    backgroundColor: 'white',
+  },
+  logo: {
+    width: 'auto',
+    height: 100,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  contentContainer: {
+    padding: 5,
+  },
+  subtitle: {
+    marginBottom: 20,
+  },
+  description: {
+    marginBottom: 0,
+  },
+  registerButton: {
+    backgroundColor: '#4b57ee', // color violeta-azul //
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  registerText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  signinButton: {
+    backgroundColor: '#8b35e1', // color violeta //
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  signinText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});
