@@ -1,16 +1,37 @@
-import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Image, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 
-const PropertyCard = ({ image, title, pueblo, precio, admin }) => { 
-    
+const PropertyCard = ({ image, title, pueblo, precio, admin, onPress }) => { 
+  const scaleValue = useRef(new Animated.Value(1)).current;
+ 
+  const handlePressIn = () => {
+    Animated.spring(scaleValue, {
+      toValue: 0.95,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleValue, {
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
+  };
+
   return (
-    <View style={styles.card}>
-      <Image source={image} style={styles.image} />
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.details}>🏠 Pueblo: {pueblo}</Text>
-      <Text style={styles.details}>💰 Precio: ${precio}</Text>
-      <Text style={styles.details}>👤 Admin: {admin}</Text>
-    </View>
+     <TouchableOpacity
+      onPress={onPress}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+    >
+      <Animated.View style={[styles.card, { transform: [{ scale: scaleValue }] }]}>
+        <Image source={image} style={styles.image} />
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.details}>🏠 Pueblo: {pueblo}</Text>
+        <Text style={styles.details}>💰 Precio: ${precio}</Text>
+        <Text style={styles.details}>👤 Admin: {admin}</Text>
+      </Animated.View>
+    </TouchableOpacity>
   );
 };
 

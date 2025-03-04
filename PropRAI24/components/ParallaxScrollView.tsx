@@ -13,15 +13,14 @@ import Animated, {
 // Importamos componentes y hooks personalizados de nuestra aplicación
 import { ThemedView } from '@/components/ThemedView'; // Contenedor que respeta el tema actual
 import { useBottomTabOverflow } from '@/components/ui/TabBarBackground'; // Hook para manejar el espaciado del TabBar
-import { useColorScheme } from '@/hooks/useColorScheme'; // Hook para determinar el esquema de color (claro u oscuro)
 
-// Constante para la altura del encabezado
-const HEADER_HEIGHT = 200;
+// altura del encabezado
+const HEADER_HEIGHT = 150;
 
 // Definimos las propiedades del componente usando PropsWithChildren
 type Props = PropsWithChildren<{
   headerImage: ReactElement; // Imagen o componente para el encabezado
-  headerBackgroundColor: { dark: string; light: string }; // Colores de fondo para temas oscuros y claros
+  headerBackgroundColor: { dark: string }; // Colores de fondo para temas oscuros y claros
 }>;
 
 // Componente principal de ParallaxScrollView
@@ -31,7 +30,6 @@ export default function ParallaxScrollView({
   headerBackgroundColor, // Colores de fondo dinámicos basados en el tema
 }: Props) {
   // Obtenemos el esquema de color actual (claro o oscuro)
-  const colorScheme = useColorScheme() ?? 'light';
 
   // Creamos una referencia animada para el ScrollView
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -47,14 +45,14 @@ export default function ParallaxScrollView({
     return {
       transform: [
         {
-          translateY: interpolate(
+          translateY: interpolate( // Desplazamiento vertical del encabezado
             scrollOffset.value, // Valor actual del desplazamiento
             [-HEADER_HEIGHT, 0, HEADER_HEIGHT], // Rango de entrada
             [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75] // Rango de salida para el desplazamiento vertical
           ),
         },
         {
-          scale: interpolate(
+          scale: interpolate( // Escala del encabezado
             scrollOffset.value, // Valor actual del desplazamiento
             [-HEADER_HEIGHT, 0, HEADER_HEIGHT], // Rango de entrada
             [2, 1, 1] // Rango de salida para la escala
@@ -78,7 +76,6 @@ export default function ParallaxScrollView({
         <Animated.View
           style={[
             styles.header, // Estilo base del encabezado
-            { backgroundColor: headerBackgroundColor[colorScheme] }, // Color de fondo dinámico
             headerAnimatedStyle, // Estilo animado para efectos de paralaje
           ]}
         >
